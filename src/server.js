@@ -14,9 +14,9 @@ export const setupServer = () => {
       target: 'pino-pretty',
     },
   });
-  //   app.use(logger);
+  app.use(logger);
 
-  app.get('/contact', async (req, res) => {
+  app.get('/contacts', async (req, res) => {
     const data = await contactServicer.getContacts;
 
     res.json({
@@ -26,7 +26,7 @@ export const setupServer = () => {
     });
   });
 
-  app.get('/contact/:id', async (req, res) => {
+  app.get('/contacts/:id', async (req, res) => {
     const { id } = req.params;
     const data = await contactServicer.getContactById(id);
 
