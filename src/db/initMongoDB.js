@@ -9,7 +9,7 @@ export const initMongoDB = async () => {
     const url = env('MONGODB_URL');
     const db = env('MONGODB_DB');
     await mongoose.connect(
-      `mongodb+srv://${user}:${password}@${url}/${db}?retryWrites=true&w=majority`,
+      `mongodb+srv://${user}:${password}@${url}/${db}?retryWrites=true&w=majority&appName=Cluster0`,
     );
     console.log('MongoDB connection successfuly');
   } catch (error) {
@@ -17,5 +17,3 @@ export const initMongoDB = async () => {
     throw error;
   }
 };
-
-// `mongodb+srv://${user}:${password}@${url}/${db}?retryWrites=true&w=majority&appName=Cluster0`
