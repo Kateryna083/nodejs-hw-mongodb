@@ -17,7 +17,7 @@ export const setupServer = () => {
   app.use(logger);
 
   app.get('/contacts', async (req, res) => {
-    const data = await contactServicer.getContacts;
+    const data = await contactServicer.getContacts();
 
     res.json({
       status: 200,
