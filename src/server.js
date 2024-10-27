@@ -24,7 +24,6 @@ export const setupServer = () => {
       message: 'Successfully found contacts!',
       data,
     });
-    return;
   });
 
   app.get('/contacts/:id', async (req, res) => {
@@ -35,6 +34,7 @@ export const setupServer = () => {
       res.status(404).json({
         message: 'Contact not found',
       });
+      return;
     }
     res.json({
       status: 200,
