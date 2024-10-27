@@ -49,11 +49,11 @@ export const setupServer = () => {
     });
   });
 
-  // app.use((error, req, res, next) => {
-  //   res.status(500).json({
-  //     message: error.message,
-  //   });
-  // });
+  app.use((error, req, res, next) => {
+    res.status(500).json({
+      message: error.message,
+    });
+  });
 
   const port = Number(env('PORT', 3000));
 
