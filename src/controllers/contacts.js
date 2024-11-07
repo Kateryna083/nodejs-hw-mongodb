@@ -4,16 +4,20 @@ import * as contactServicer from '../services/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { sortByList } from '../db/models/Contact.js';
+import { parseContactFilterParams } from '../utils/parseContactFilterParams.js';
 
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query, sortByList);
+
+  const filter = parseContactFilterParams(req.query); // Додаємо фільтр
 
   const data = await contactServicer.getContacts({
     page,
     perPage,
     sortBy,
     sortOrder,
+    filter, // Передаємо фільтр у `getContacts`
   });
 
   res.json({
