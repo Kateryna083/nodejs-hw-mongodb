@@ -48,3 +48,5 @@ export const login = async ({ email, password }) => {
 };
 
 export const findSession = (filter) => SessionCollection.findOne(filter);
+
+export const findUser = (filter) => UserCollection.findOne(filter);
