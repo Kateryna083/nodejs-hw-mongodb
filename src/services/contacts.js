@@ -17,7 +17,7 @@ export const getContacts = async ({
     .limit(perPage)
     .sort({ [sortBy]: sortOrder });
 
-  const totalItems = await ContactCollection.countDocuments(filter); // Підраховуємо з урахуванням фільтру
+  const totalItems = await ContactCollection.countDocuments(filter);
 
   const paginationData = calculatePaginationData({ totalItems, page, perPage });
 
