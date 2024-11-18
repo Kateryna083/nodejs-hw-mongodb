@@ -1,20 +1,26 @@
 import { typeList } from '../constants/contacts.js';
 
-export const parseContactFilterParams = (query) => {
+const parseType = (contactType) => {
+  if (typeof contactType !== 'string') return null;
+
+  return typeList.includes(contactType) ? contactType : null;
+};
+
+const parseIsFavourite = (isFavourite) => {
+  if (isFavourite === 'true') return true;
+  if (isFavourite === 'false') return false;
+
+  return;
+};
+
+export const parseFilterParams = (query) => {
   const { type, isFavourite } = query;
-  const filter = {};
 
-  // Перевірка параметра `type`
-  if (type && typeList.includes(type)) {
-    filter.contactType = type;
-  }
+  const parsedType = parseType(type);
+  const parsedIsFavourite = parseIsFavourite(isFavourite);
 
-  // Перевірка параметра `isFavourite`
-  if (isFavourite === 'true') {
-    filter.isFavourite = true;
-  } else if (isFavourite === 'false') {
-    filter.isFavourite = false;
-  }
-
-  return filter;
+  return {
+    contactType: parsedType,
+    isFavourite: parsedIsFavourite,
+  };
 };

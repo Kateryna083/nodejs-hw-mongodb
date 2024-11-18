@@ -9,13 +9,6 @@ export const getContacts = async ({
   sortOrder = 'asc',
   filter = {},
 }) => {
-  // const skip = (page - 1) * perPage;
-
-  // const data = await ContactCollection.find(filter)
-  //   .skip(skip)
-  //   .limit(perPage)
-  //   .sort({ [sortBy]: sortOrder });
-
   const query = ContactCollection.find();
 
   if (filter.contactType) {
@@ -43,16 +36,6 @@ export const getContacts = async ({
     ...paginationData,
   };
 };
-
-//   const totalItems = await ContactCollection.countDocuments(filter);
-
-//   const paginationData = calculatePaginationData({ totalItems, page, perPage });
-
-//   return {
-//     data,
-//     ...paginationData,
-//   };
-// };
 
 export const getContactById = (id) => ContactCollection.findById(id);
 
