@@ -1,18 +1,19 @@
 import createHttpError from 'http-errors';
 
 import * as contactServicer from '../services/contacts.js';
+
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
-import { sortByList } from '../db/models/Contact.js';
 import { parseContactFilterParams } from '../utils/parseContactFilterParams.js';
+
+import { sortByList } from '../db/models/Contact.js';
 
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query, sortByList);
+  const filter = parseContactFilterParams(req.query);
   const { _id: userId } = req.user;
   filter.userId = userId;
-
-  const filter = parseContactFilterParams(req.query);
 
   const data = await contactServicer.getContacts({
     page,
@@ -34,7 +35,7 @@ export const getContactByIdController = async (req, res) => {
   const data = await contactServicer.getContactById(id);
 
   if (!data) {
-    throw createHttpError(404, `Contact not found`);
+    throw createHttpError(404, `Contact with id=${id} not found`);
   }
   res.json({
     status: 200,
@@ -45,7 +46,6 @@ export const getContactByIdController = async (req, res) => {
 
 export const addContactController = async (req, res) => {
   const { _id: userId } = req.user;
-
   const data = await contactServicer.addContact(...req.body, userId);
 
   res.status(201).json({
