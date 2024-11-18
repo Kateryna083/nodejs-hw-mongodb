@@ -13,7 +13,7 @@ const parseIsFavourite = (isFavourite) => {
   return;
 };
 
-export const parseFilterParams = (query) => {
+export const parseContactFilterParams = (query) => {
   const { type, isFavourite } = query;
 
   const parsedType = parseType(type);
