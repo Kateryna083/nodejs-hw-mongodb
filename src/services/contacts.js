@@ -21,7 +21,9 @@ export const getContacts = async ({
     query.where('userId').equals(filter.userId);
   }
 
-  const totalItems = await MovieCollection.find().merge(query).countDocuments();
+  const totalItems = await ContactCollection.find()
+    .merge(query)
+    .countDocuments();
 
   const skip = (page - 1) * perPage;
   const data = await query
