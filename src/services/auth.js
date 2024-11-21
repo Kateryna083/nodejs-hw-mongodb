@@ -101,14 +101,17 @@ export const requestResetToken = async (email) => {
     },
     env('JWT_SECRET'),
     {
-      expiresIn: '15m',
+      expiresIn: '5m',
     },
   );
+
+  // Формування URL для скидання паролю
+  const resetLink = `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`;
 
   await sendEmail({
     from: env(SMTP.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
-    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+    html: `<p>Click <a href="${resetLink}">here</a> to reset your password!</p>`,
   });
 };
