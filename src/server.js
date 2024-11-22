@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 
 import { env } from './utils/env.js';
 
+import { UPLOAD_DIR } from './constants/index.js';
+
 import contactsRouter from './routers/contacts.js';
 import authRouter from './routers/auth.js';
 
@@ -17,6 +19,9 @@ export const setupServer = () => {
   app.use(cors());
   app.use(express.json());
   app.use(cookieParser());
+
+  app.use('/uploads', express.static(UPLOAD_DIR));
+
   // app.use(logger);
 
   app.use('/auth', authRouter);

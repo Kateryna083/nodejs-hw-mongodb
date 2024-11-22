@@ -5,6 +5,9 @@ import * as contactServicer from '../services/contacts.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseContactFilterParams } from '../utils/parseContactFilterParams.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { env } from '../utils/env.js';
 
 import { sortByList } from '../db/models/Contact.js';
 
@@ -89,10 +92,22 @@ export const patchContactController = async (req, res) => {
 
   const { _id: userId } = req.user;
 
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
   const result = await contactServicer.updateContact({
     _id,
     userId,
     payload: req.body,
+    photo: photoUrl,
   });
 
   if (!result) {
