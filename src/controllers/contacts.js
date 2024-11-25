@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors';
+import * as path from 'node:path';
 
 import * as contactServicer from '../services/contacts.js';
 
@@ -10,6 +11,8 @@ import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { env } from '../utils/env.js';
 
 import { sortByList } from '../db/models/Contact.js';
+
+const enableCloudinary = env('ENABLE_CLOUDINARY');
 
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -56,6 +59,16 @@ export const addContactController = async (req, res) => {
   // console.log('addContactController - req.body:', req.body); //перевірка
   // console.log('addContactController - userId:', userId); //перевірка
 
+  let photo = null;
+  if (req.file) {
+    if (enableCloudinary === 'true') {
+      photo = await saveFileToCloudinary(req.file, 'photo');
+    } else {
+      await saveFileToUploadDir(req.file);
+      photo = path.join(req.file.filename);
+    }
+  }
+
   const data = await contactServicer.addContact({ ...req.body, userId });
 
   // console.log('addContactController - created data:', data);
@@ -96,13 +109,16 @@ export const patchContactController = async (req, res) => {
 
   let photoUrl;
 
+  // if (photo) {
+  //   photoUrl = await saveFileToCloudinary(photo);
+  // } else {
+  //   photoUrl = await saveFileToUploadDir(photo);
+  // }
+
   if (photo) {
-    if (env('ENABLE_CLOUDINARY') === 'true') {
-      photoUrl = await saveFileToCloudinary(photo);
-    } else {
-      photoUrl = await saveFileToUploadDir(photo);
-    }
+    photoUrl = await saveFileToCloudinary(photo);
   }
+
   const result = await contactServicer.updateContact({
     _id,
     userId,
