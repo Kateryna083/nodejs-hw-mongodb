@@ -69,7 +69,7 @@ export const addContactController = async (req, res) => {
     }
   }
 
-  const data = await contactServicer.addContact({ ...req.body, userId });
+  const data = await contactServicer.addContact({ ...req.body, userId, photo });
 
   // console.log('addContactController - created data:', data);
 
@@ -108,23 +108,29 @@ export const patchContactController = async (req, res) => {
   const photo = req.file;
 
   let photoUrl;
+  if (photo) {
+    if (enableCloudinary === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
 
   // if (photo) {
   //   photoUrl = await saveFileToCloudinary(photo);
-  // } else {
-  //   photoUrl = await saveFileToUploadDir(photo);
   // }
 
-  if (photo) {
-    photoUrl = await saveFileToCloudinary(photo);
-  }
+  console.log('photoUrl', photoUrl);
 
   const result = await contactServicer.updateContact({
     _id,
     userId,
     payload: req.body,
+
     photo: photoUrl,
   });
+
+  console.log('result', result);
 
   if (!result) {
     throw createHttpError(404, 'Contact not found');
