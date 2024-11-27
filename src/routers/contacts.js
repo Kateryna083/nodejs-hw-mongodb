@@ -36,7 +36,6 @@ contactsRouter.post(
 contactsRouter.put(
   '/:id',
   isValidId,
-  upload.single('photo'),
   validateBody(contactAddSchema),
   ctrlWrapper(contactControllers.upsertContactController),
 );
