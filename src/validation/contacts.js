@@ -47,4 +47,4 @@ export const contactUpdateSchema = Joi.object({
         ', ',
       )}`,
     }),
-}).min(1);
+});
