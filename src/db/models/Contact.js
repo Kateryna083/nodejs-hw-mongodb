@@ -25,12 +25,19 @@ const contactSchema = new Schema(
       required: true,
       default: 'personal',
     },
+    photo: {
+      type: String, // Зберігається URL фото
+      default: null,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: true,
     },
-    photo: { type: String },
+    // photo: {
+    //   type: String,
+    //   default: null,
+    // },
   },
   { versionKey: false, timestamps: true },
 );
@@ -49,6 +56,6 @@ export const sortByList = [
   'contactType',
 ];
 
-const ContactCollection = model('contact', contactSchema);
+const ContactCollection = model('сontact', contactSchema);
 
 export default ContactCollection;

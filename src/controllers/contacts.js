@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 // import * as path from 'node:path';
+import fs from 'fs/promises';
 
 import * as contactServicer from '../services/contacts.js';
 
@@ -53,17 +54,24 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
+  console.log('Фото у запиті:', req.file); // Логування фото
   const { _id: userId } = req.user;
   const photo = req.file;
   let photoUrl;
+
+  // Якщо файл фото є в запиті
   if (photo) {
+    // Завантажуємо фото на Cloudinary
     photoUrl = await saveFileToCloudinary(photo);
   }
 
+  // console.log('URL завантаженого фото:', photoUrl);
+
+  // Додаємо контакт до бази даних, включаючи URL фото
   const data = await contactServicer.addContact({
     ...req.body,
     userId,
-    photo: photoUrl,
+    photo: photoUrl, // Зберігаємо посилання на фото
   });
 
   res.status(201).json({

@@ -13,7 +13,17 @@ cloudinary.config({
 });
 
 export const saveFileToCloudinary = async (file) => {
-  const response = await cloudinary.uploader.upload(file.path);
-  await fs.unlink(file.path);
-  return response.secure_url;
+  try {
+    // Завантажуємо файл на Cloudinary
+    const response = await cloudinary.uploader.upload(file.path);
+
+    // Видаляємо файл з локального сервера після завантаження
+    await fs.unlink(file.path);
+
+    // Повертаємо URL завантаженого фото
+    return response.secure_url;
+  } catch (error) {
+    console.error('Помилка завантаження на Cloudinary:', error);
+    throw new Error('Не вдалося завантажити фото на Cloudinary');
+  }
 };
