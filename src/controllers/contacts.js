@@ -111,10 +111,20 @@ export const patchContactController = async (req, res, next) => {
   if (photo) {
     photoUrl = await saveFileToCloudinary(photo);
   }
-  const result = await contactServicer.updateContact(_id, userId, {
-    ...req.body,
-    photo: photoUrl,
+
+  // const result = await contactServicer.updateContact(_id, userId, {
+  //   ...req.body,
+  //   photo: photoUrl,
+  // });
+
+  // Оновлення контакту
+  const result = await contactServicer.updateContact({
+    _id,
+    userId,
+    payload: { ...req.body, photo: photoUrl },
+    options: { new: true },
   });
+
   if (!result) {
     next(
       createHttpError(
@@ -128,7 +138,7 @@ export const patchContactController = async (req, res, next) => {
   res.json({
     status: 200,
     message: 'Successfully patched a contact!',
-    data: result.contact,
+    data: result.data,
   });
 };
 

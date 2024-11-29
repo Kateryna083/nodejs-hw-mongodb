@@ -58,6 +58,12 @@ export const updateContact = async ({
 
   options = {},
 }) => {
+  console.log('Update Contact - Parameters:', {
+    _id,
+    userId,
+    payload,
+    options,
+  });
   const rawResult = await ContactCollection.findOneAndUpdate(
     { _id, userId },
     payload,
