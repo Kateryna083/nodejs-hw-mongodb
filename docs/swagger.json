@@ -196,7 +196,7 @@
                 "required": [
                   "name",
                   "phoneNumber",
-                  "isFavourite",
+                  "contactType",
                   "userId"
                 ],
                 "properties": {
@@ -700,7 +700,7 @@
           "_id",
           "name",
           "phoneNumber",
-          "isFavourite",
+          "contactType",
           "userId"
         ],
         "properties": {
