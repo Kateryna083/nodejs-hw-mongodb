@@ -35,7 +35,7 @@ requestBody:
             description: "Contact's email"
             type: string
             example: 'contact@mail.com'
-          type:
+          contactType:
             description: 'Contact type'
             type: string
             enum: ['work', 'home', 'personal']
