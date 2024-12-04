@@ -34,7 +34,7 @@ parameters:
       type: boolean
       example: true
   - in: query
-    name: contactType
+    name: type
     schema:
       type: string
       enum: ['work', 'home', 'personal']

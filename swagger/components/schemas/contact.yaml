@@ -3,7 +3,7 @@ required:
   - _id
   - name
   - phoneNumber
-  - contactType
+  - type
   - userId
 properties:
   _id:
@@ -30,7 +30,7 @@ properties:
     description: "Contact's email"
     type: string
     example: 'contact@mail.com'
-  contactType:
+  type:
     description: 'Contacts type'
     type: string
     enum: ['work', 'home', 'personal']

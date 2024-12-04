@@ -89,7 +89,7 @@
           },
           {
             "in": "query",
-            "name": "contactType",
+            "name": "type",
             "schema": {
               "type": "string",
               "enum": [
@@ -220,7 +220,7 @@
                     "type": "string",
                     "example": "contact@mail.com"
                   },
-                  "contactType": {
+                  "type": {
                     "description": "Contacts type",
                     "type": "string",
                     "enum": [
@@ -422,7 +422,7 @@
                     "type": "string",
                     "example": "contact@mail.com"
                   },
-                  "contactType": {
+                  "type": {
                     "description": "Contact type",
                     "type": "string",
                     "enum": [
@@ -700,7 +700,7 @@
           "_id",
           "name",
           "phoneNumber",
-          "contactType",
+          "type",
           "userId"
         ],
         "properties": {
@@ -734,7 +734,7 @@
             "type": "string",
             "example": "contact@mail.com"
           },
-          "contactType": {
+          "type": {
             "description": "Contacts type",
             "type": "string",
             "enum": [
