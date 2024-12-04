@@ -220,7 +220,7 @@
                     "type": "string",
                     "example": "contact@mail.com"
                   },
-                  "type": {
+                  "contactType": {
                     "description": "Contacts type",
                     "type": "string",
                     "enum": [
@@ -422,7 +422,7 @@
                     "type": "string",
                     "example": "contact@mail.com"
                   },
-                  "type": {
+                  "contactType": {
                     "description": "Contact type",
                     "type": "string",
                     "enum": [
